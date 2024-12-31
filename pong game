@@ -1,0 +1,127 @@
+# المالك : ايهم حسن دندن
+# تاريخ الانشاء : 31/12/2024
+
+
+
+# مكتبة الواجهة الرسومية
+import turtle
+
+#اعدادات الواجهة الرسومية
+a = turtle.Screen()
+a.title("ayham ")
+a.bgcolor("gray")
+a.setup(width=1000, height=600)
+a.tracer(0)
+
+#اعدادات المضرب الاول
+m1 = turtle.Turtle()
+m1.speed(0)
+m1.shape("square")
+m1.color("black")
+m1.penup()
+m1.goto(-480, 0)
+m1.shapesize(stretch_wid=6, stretch_len=1)
+
+#اعدادات المضرب الثاني
+m2 = turtle.Turtle()
+m2.speed(0)
+m2.shape("square")
+m2.color("black")
+m2.penup()
+m2.goto(470, 0)
+m2.shapesize(stretch_wid=6, stretch_len=1)
+
+#اعدادات الكرة
+ll = turtle.Turtle()
+ll.speed(0)
+ll.shape("square")
+ll.color("white")
+ll.penup()
+ll.goto(0, 0)
+ll.dx = 0.090
+ll.dy = 0.090
+
+#اعدادات النتيجة
+score=turtle.Turtle()
+score.speed()
+score.color("black")
+score.penup()
+score.hideturtle()
+score.goto(0,260)
+score.write(" player 1 : 0 player 2 : 0",align="center" , font=("courier",24,"normal"))
+score1=0
+score2=0
+
+#وظائف تحريك المضارب الى الاعلى والاسفل
+def m1_up():
+    y = m1.ycor()
+    if y < 230:
+        y += 20
+    m1.sety(y)
+
+
+def m1_down():
+    y = m1.ycor()
+    if y > -230:
+        y -= 20
+    m1.sety(y)
+
+
+def m2_up():
+    z = m2.ycor()
+    if z < 230:
+        z += 20
+    m2.sety(z)
+
+
+def m2_down():
+    z = m2.ycor()
+    if z > -230:
+        z -= 20
+    m2.sety(z)
+
+
+#ضبط ازرار التحكم
+a.listen()
+a.onkeypress(m1_up, "w")
+a.onkeypress(m1_down, "s")
+a.onkeypress(m2_up, "i")
+a.onkeypress(m2_down, "k")
+
+#تشغيل اللعبة
+while True:
+    a.update()
+    ll.setx(ll.xcor() + ll.dx)
+    ll.sety(ll.ycor() + ll.dy)
+
+#ضبط تحركات الكرة
+    if ll.ycor() > 280:
+        ll.sety(280)
+        ll.dy *= -1
+
+    if ll.ycor() < -280:
+        ll.sety(-280)
+        ll.dy *= -1
+
+    if ll.xcor() > 480:
+        ll.goto(0, 0)
+        ll.dx *= -1
+        score1 +=1
+        score.clear()
+        score.write(" player 1 : {} player 2 : {}".format(score1 , score2), align="center", font=("courier", 24, "normal"))
+
+    if ll.xcor() < -480:
+        ll.goto(0, 0)
+        ll.dx *= -1
+        score2 +=1
+        score.clear()
+        score.write(" player 1 : {} player 2 : {}".format(score1 , score2), align="center", font=("courier", 24, "normal"))
+
+
+    if ( ll.dx > 0 and ll.xcor() > 450 and ll.xcor() < 460 and ll.ycor() < m2.ycor() + 60 and ll.ycor() > m2.ycor() - 60):
+        ll.setx(460)
+        ll.dx *= -1
+
+    if ( ll.dx < 0 and ll.xcor() < -450 and ll.xcor() > -460 and ll.ycor() < m1.ycor() + 60 and ll.ycor() > m1.ycor() - 60):
+        ll.setx(-460)
+        ll.dx *= -1
